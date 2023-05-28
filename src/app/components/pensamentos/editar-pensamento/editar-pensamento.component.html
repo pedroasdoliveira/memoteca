@@ -1,15 +1,11 @@
 <section class="container editar-pensamentos ff-inter">
   <header class="header">
-    <h2>
-      Adicione um <br />
-      pensamento novo:
-    </h2>
+    <h2>Adicione um <br />pensamento novo:</h2>
   </header>
-
   <form [formGroup]="formulario">
     <label for="pensamento">Pensamento</label>
     <input
-      type="textarea"
+      type="text"
       class="input"
       id="pensamento"
       name="conteudo"
@@ -27,32 +23,30 @@
       Pensamento é obrigatório!
     </div>
 
-    <label for="autoria">Autoria ou Fonte</label>
+    <label for="autoria">Autoria ou fonte</label>
     <input
       type="text"
       class="input"
       id="autoria"
-      name="autoria"
-      placeholder="Digite a autoria ou fonte..."
       formControlName="autoria"
+      placeholder="Digite a autoria ou fonte"
     />
 
     <div
       class="mensagem__erro"
       *ngIf="formulario.get('autoria')?.errors?.['required'] && formulario.get('autoria')?.touched"
     >
-      Autoria é obrigatório!
+      Autoria é obrigatória!
     </div>
 
     <div
       class="mensagem__erro"
       *ngIf="formulario.get('autoria')?.errors?.['minlength'] && formulario.get('autoria')?.touched"
     >
-      Autoria deve ter pelo menos 3 caracteres!
+      Autoria precisa ter no mínimo 3 caracteres!
     </div>
 
     <label for="modelo">Selecione o modelo do card:</label>
-
     <div class="container-radio">
       <div class="radio-modelo">
         <label for="modelo1">
@@ -60,21 +54,16 @@
             type="radio"
             id="modelo1"
             value="modelo1"
-            name="modelo"
             formControlName="modelo"
           />
-
           <div class="custom-radio">
             <span></span>
           </div>
-
           <span>Modelo 1</span>
         </label>
-
-        Previa:
-        <div class="modelo modelo1 ff-roboto-mono" *ngIf="formulario">
+        Prévia:
+        <div class="modelo modelo1 ff-roboto-mono">
           <img src="../../../../assets/imgs/modelo1.png" alt="Aspas azuis" />
-
           <p class="conteudo">{{ formulario.get("conteudo")?.value }}</p>
           <p class="autoria">
             <b>{{ formulario.get("autoria")?.value }}</b>
@@ -88,24 +77,19 @@
             type="radio"
             id="modelo2"
             value="modelo2"
-            name="modelo"
             formControlName="modelo"
           />
-
           <div class="custom-radio">
             <span></span>
           </div>
-
           <span>Modelo 2</span>
         </label>
-
-        Previa:
-        <div class="modelo modelo2 ff-roboto-mono" *ngIf="formulario">
+        Prévia:
+        <div class="modelo modelo2 ff-roboto-mono">
           <img
             src="../../../../assets/imgs/modelo2.png"
-            alt="Aspas azuis claro"
+            alt="Aspas azul claro"
           />
-
           <p class="conteudo">{{ formulario.get("conteudo")?.value }}</p>
           <p class="autoria">
             <b>{{ formulario.get("autoria")?.value }}</b>
@@ -119,24 +103,16 @@
             type="radio"
             id="modelo3"
             value="modelo3"
-            name="modelo"
             formControlName="modelo"
           />
-
           <div class="custom-radio">
             <span></span>
           </div>
-
           <span>Modelo 3</span>
         </label>
-
-        Previa:
-        <div class="modelo modelo3 ff-roboto-mono" *ngIf="formulario">
-          <img
-            src="../../../../assets/imgs/modelo3.png"
-            alt="Aspas verdes claras"
-          />
-
+        Prévia:
+        <div class="modelo modelo3 ff-roboto-mono">
+          <img src="../../../../assets/imgs/modelo3.png" alt="Aspas verdes" />
           <p class="conteudo">{{ formulario.get("conteudo")?.value }}</p>
           <p class="autoria">
             <b>{{ formulario.get("autoria")?.value }}</b>
@@ -144,16 +120,15 @@
         </div>
       </div>
     </div>
-
+    
     <div class="acoes">
       <button
-        (click)="handleEditarPensamento()"
         [disabled]="!formulario.valid"
+        (click)="handleEditarPensamento()"
         [ngClass]="habilitarBotao()"
       >
         Salvar
       </button>
-
       <button (click)="handleCancelar()" class="botao">Cancelar</button>
     </div>
   </form>

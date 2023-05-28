@@ -3,6 +3,7 @@ import { Pensamento } from '../types';
 import { PensamentoService } from '../pensamento.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-editar-pensamento',
@@ -19,6 +20,25 @@ export class EditarPensamentoComponent implements OnInit {
 
   formulario!: FormGroup;
 
+  ngOnInit(): void {
+    const id = this.route.snapshot.paramMap.get('id')
+
+    this.service.buscarPorId(parseInt(id!)).pipe(take(1)).subscribe((pensamento) => {
+      this.formulario = this.formBuilder.group({
+        id: [pensamento.id],
+        conteudo: [pensamento.conteudo, Validators.compose([
+          Validators.required,
+          Validators.pattern(/(.|\s)*\S(.|\s)*/)
+        ])],
+        autoria: [pensamento.autoria, Validators.compose([
+          Validators.required,
+          Validators.minLength(3)
+        ])],
+        modelo: [pensamento.modelo]
+      })
+    })
+  }  
+
   handleEditarPensamento = () => {
     this.service.editar(this.formulario.value).subscribe(() => {
       this.router.navigate(['/listarPensamentos']);
@@ -28,31 +48,6 @@ export class EditarPensamentoComponent implements OnInit {
   handleCancelar = () => {
     this.router.navigate(['/listarPensamentos']);
   };
-
-  ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id');
-  
-    this.service.buscarPorId(parseInt(id!)).subscribe((pensamento) => {
-      this.formulario = this.formBuilder.group({
-        conteudo: [
-          pensamento.conteudo,
-          Validators.compose([
-            Validators.required,
-            Validators.pattern(/(.|\s)*\S(.|\s)*/),
-          ]),
-        ],
-        autoria: [
-          pensamento.autoria,
-          Validators.compose([
-            Validators.required,
-            Validators.pattern(/(.|\s)*\S(.|\s)*/),
-            Validators.minLength(3),
-          ]),
-        ],
-        modelo: [pensamento.modelo],
-      });
-    });
-  }  
 
   habilitarBotao = (): string => {
     if (this.formulario.valid) {
