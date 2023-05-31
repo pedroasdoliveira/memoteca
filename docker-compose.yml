@@ -1,0 +1,13 @@
+version: "3.8"
+
+services: 
+  front: 
+    container_name: memoteca_front
+    restart: unless-stopped
+    image: memoteca_client
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      target: Development
+    ports:
+      - 4200:4200
