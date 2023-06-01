@@ -39,6 +39,7 @@ export class CriarComponent implements OnInit {
         ]),
       ],
       modelo: ['modelo1'],
+      favorito: [false]
     });
   }
 
